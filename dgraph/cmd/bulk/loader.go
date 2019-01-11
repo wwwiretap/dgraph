@@ -41,8 +41,7 @@ import (
 )
 
 type options struct {
-	RDFDir           string
-	JSONDir          string
+	DataSource       string
 	SchemaFile       string
 	DgraphsDir       string
 	TmpDir           string
@@ -193,6 +192,7 @@ func (ld *loader) mapStage() {
 		ext = ".json"
 		files = findDataFiles(ld.opt.JSONDir, ext)
 	}
+
 
 	readers := make(map[string]*bufio.Reader)
 	for _, file := range files {
