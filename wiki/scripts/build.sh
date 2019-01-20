@@ -26,21 +26,6 @@ VERSIONS_ARRAY=(
 'v1.0.8'
 'v1.0.7'
 'v1.0.6'
-'v1.0.5'
-'v1.0.4'
-'v1.0.3'
-'v1.0.2'
-'v1.0.1'
-'v1.0.0'
-'v0.9.4'
-'v0.9.3'
-'v0.9.2'
-'v0.9.1'
-'v0.9.0'
-'v0.8.3'
-'v0.8.2'
-'v0.8.1'
-'v0.8.0'
 )
 
 joinVersions() {
@@ -133,7 +118,7 @@ checkAndUpdate()
 firstRun=1
 while true; do
 	# Lets move to the docs directory.
-	pushd /home/ubuntu/dgraph/wiki > /dev/null
+	pushd ~/go/src/github.com/dgraph-io/dgraph/wiki/ > /dev/null
 
 	currentBranch=$(git rev-parse --abbrev-ref HEAD)
 
