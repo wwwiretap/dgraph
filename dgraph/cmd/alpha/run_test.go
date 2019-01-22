@@ -137,12 +137,21 @@ func runJsonMutation(m string) error {
 }
 
 func alterSchema(s string) error {
-	req, err := http.NewRequest("PUT", addr+"/alter", bytes.NewBufferString(s))
-	if err != nil {
-		return err
+	for {
+		req, err := http.NewRequest("PUT", addr+"/alter", bytes.NewBufferString(s))
+		if err != nil {
+			return err
+		}
+		if _, _, err = runRequest(req); err == nil {
+			return nil
+		}
+
+		// retry if we get the following error
+		if !strings.Contains(err.Error(),
+			"Pending transactions found. Please retry operation") {
+			return err
+		}
 	}
-	_, _, err = runRequest(req)
-	return err
 }
 
 func alterSchemaWithRetry(s string) error {
