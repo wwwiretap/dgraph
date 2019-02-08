@@ -21,9 +21,10 @@ function restartCluster {
   docker-compose -f $compose_file up --force-recreate --remove-orphans --detach
   popd >/dev/null
 
-  $basedir/contrib/wait-for-it.sh -t 60 localhost:6080 || exit 1
-  $basedir/contrib/wait-for-it.sh -t 60 localhost:9180 || exit 1
-  sleep 10 || exit 1
+#  $basedir/contrib/wait-for-it.sh -t 60 localhost:6080 || exit 1
+#  $basedir/contrib/wait-for-it.sh -t 60 localhost:9180 || exit 1
+#  sleep 10 || exit 1
+   $basedir/contrib/wait-for-alphas.sh :8180 :8182 :8183
 }
 
 function stopCluster {
