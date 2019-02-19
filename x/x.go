@@ -77,7 +77,13 @@ const (
 	TlsClientCert = "client.crt"
 	TlsClientKey  = "client.key"
 
-	GrootId = "groot"
+	GrootId       = "groot"
+	AclPredicates = `
+{"predicate":"dgraph.xid","type":"string", "index": true, "tokenizer":["exact"], "upsert": true},
+{"predicate":"dgraph.password","type":"password"},
+{"predicate":"dgraph.user.group","list":true, "reverse": true, "type": "uid"},
+{"predicate":"dgraph.group.acl","type":"string"}
+`
 )
 
 var (
