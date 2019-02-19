@@ -57,7 +57,8 @@ func DropAll(t *testing.T, dg *dgo.Dgraph) {
 	x.Check(err)
 
 	nodes := DbNodeCount(t, dg)
-	require.Equal(t, 0, nodes)
+	// the only node left should be the groot node
+	require.Equal(t, 1, nodes)
 }
 
 func DbNodeCount(t *testing.T, dg *dgo.Dgraph) int {
@@ -79,7 +80,6 @@ func DbNodeCount(t *testing.T, dg *dgo.Dgraph) int {
 	var response root
 	err = json.Unmarshal(resp.GetJson(), &response)
 	x.Check(err)
-
 	return response.Q[0].Count
 }
 

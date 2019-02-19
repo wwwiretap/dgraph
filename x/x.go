@@ -19,6 +19,7 @@ package x
 import (
 	"bufio"
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -35,6 +36,7 @@ import (
 
 	"github.com/dgraph-io/dgo"
 	"github.com/dgraph-io/dgo/protos/api"
+	"github.com/dgraph-io/dgo/x"
 	"go.opencensus.io/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -503,9 +505,22 @@ func GetDgraphClientOnPort(alphaPort int) (*dgo.Dgraph, CancelFunc) {
 	}
 
 	dc := api.NewDgraphClient(conn)
-	return dgo.NewDgraphClient(dc), func() {
+	dg, cancel := dgo.NewDgraphClient(dc), func() {
 		if err := conn.Close(); err != nil {
 			log.Printf("Error while closing connection:%v", err)
 		}
 	}
+
+	ctx := context.Background()
+	for {
+		// keep retrying until we succeed or receive a non-retriable error
+		err = dg.Login(ctx, GrootId, "password")
+		if err == nil || !strings.Contains(err.Error(), "Please retry") {
+			break
+		}
+		time.Sleep(time.Second)
+	}
+	err = dg.Alter(context.Background(), &api.Operation{DropAll: true})
+	x.Check(err)
+	return dg, cancel
 }
