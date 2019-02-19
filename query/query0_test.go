@@ -24,7 +24,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"github.com/dgraph-io/dgo"
 	"github.com/dgraph-io/dgraph/gql"
+	"github.com/dgraph-io/dgraph/x"
 )
 
 func TestGetUID(t *testing.T) {
@@ -1728,7 +1730,13 @@ func TestCountUidToVarCombinedWithNormalVar(t *testing.T) {
 	require.JSONEq(t, `{"data": {"me":[{"score": 5}]}}`, js)
 }
 
+var client *dgo.Dgraph
+
 func TestMain(m *testing.M) {
+	var cancel x.CancelFunc
+	client, cancel = x.GetDgraphClient()
+	defer cancel()
+
 	populateCluster()
 	os.Exit(m.Run())
 }
