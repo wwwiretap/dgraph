@@ -24,9 +24,8 @@ and this project will adhere to [Semantic Versioning](http://semver.org/spec/v2.
 ### Removed
 
 - Remove LRU cache from Alpha for big wins in query latency reduction (5-10x)
-  and mutation throughput (live loading 1.7x faster). Setting `--lru_mb`,
-  although still required, will not have any effect since the cache is removed.
-  The flag will be used later when LRU cache is introduced in Badger.
+  and mutation throughput (live loading 1.7x faster). **Setting `--lru_mb` is still required but will not have any effect since the cache is removed.**
+  The flag will be used later version when LRU cache is introduced in Badger.
 
 ### Fixed
 
@@ -41,12 +40,12 @@ and this project will adhere to [Semantic Versioning](http://semver.org/spec/v2.
 
 ### Added
 
-- Integrate OpenCensus in Dgraph. ([#2739](https://github.com/dgraph-io/dgraph/issues/2739)) (eccd2506, 9e7fa056)
+- Integrate OpenCensus in Dgraph. ([#2739](https://github.com/dgraph-io/dgraph/issues/2739))
 - Add Dgraph Community License for proprietary features.
 - Feature: Full binary backups. This is an enterprise feature licensed under the Dgraph Community License. ([#2710](https://github.com/dgraph-io/dgraph/issues/2710))
 - Add `--enterprise_features` flag to enable enterprise features. By enabling enterprise features, you accept the terms of the Dgraph Community License.
-- Add minio dep and its deps in govendor. (94daeaf7, 35a73e81)
-- Add network partitioning tests with blockade tool. (fd4e3872, dada74f4, e59cbfb2, 50b0484f, 3c4df36c, bec18bc8, c8ccb943)
+- Add minio dep and its deps in govendor. ([94daeaf7](https://github.com/dgraph-io/dgraph/commit/94daeaf7), [35a73e81](https://github.com/dgraph-io/dgraph/commit/35a73e81))
+- Add network partitioning tests with blockade tool. ([./contrib/blockade](https://github.com/dgraph-io/dgraph/tree/v1.0.11/contrib/blockade))
 - Add Zero endpoints `/assign?what=uids&num=10` and `/assign?what=timestamps&num=10` to assign UIDs or transaction timestamp leases.
 - Adding the acl subcommand to support acl features (still work-in-progress). ([#2795](https://github.com/dgraph-io/dgraph/issues/2795))
 - Support custom tokenizer in bulk loader ([#2820](https://github.com/dgraph-io/dgraph/issues/2820))
